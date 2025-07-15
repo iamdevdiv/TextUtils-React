@@ -10,7 +10,10 @@ import {
 } from "react-router";
 
 function App() {
-	const [alert, setAlert] = useState(null);
+	const [alert, setAlert] = useState({
+		text: "",
+		type: "",
+	});
 	const timeoutRef = useRef(null);
 
 	const showAlert = (text, type) => {
@@ -19,12 +22,15 @@ function App() {
 		}
 
 		setAlert({
-			type: type,
 			text: text,
+			type: type,
 		});
 
 		timeoutRef.current = setTimeout(() => {
-			setAlert(null);
+			setAlert({
+				text: "",
+				type: "",
+			});
 		}, 3000);
 	}
 
@@ -35,11 +41,7 @@ function App() {
 				<Alert alert={alert}/>
 				<Routes>
 					<Route path="/about" element={<FAQ/>}/>
-						{/* <FAQ/> */}
-					{/* </Route> */}
-					<Route path="/" element={<TextForm/>}/>
-						{/* <TextForm showAlert={showAlert}/> */}
-					{/* </Route> */}
+					<Route path="/" element={<TextForm showAlert={showAlert}/>}/>
 				</Routes>
 			</Router>
 		</>
